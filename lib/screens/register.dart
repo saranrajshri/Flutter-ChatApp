@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 class Register extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _RegisterState();
   }
 }
 
-class _RegisterState extends State<Register> {
-  // State variables
-  int counter = 0;
+class _RegisterState extends State<Register> {  
 
   Widget _buildUserNameT() {
     return Container(
@@ -85,6 +82,7 @@ class _RegisterState extends State<Register> {
         width: double.infinity,
         child: RaisedButton(
           elevation: 5.0,
+          color: Colors.white,
           onPressed: () {},
           child: Text("CREATE YOUR ACCOUNT",
               style: TextStyle(color: Color(0xFF478dD0))),
