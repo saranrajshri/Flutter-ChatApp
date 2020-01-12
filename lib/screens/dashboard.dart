@@ -15,7 +15,6 @@ class _DashBoardState extends State<DashBoard> {
   Widget _currentPage = Home();
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -29,14 +28,8 @@ class _DashBoardState extends State<DashBoard> {
             ),
             centerTitle: true,
             backgroundColor: Colors.white,
-            elevation: 0.0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            ),
+            elevation: 2.0,
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.supervised_user_circle),
@@ -45,12 +38,49 @@ class _DashBoardState extends State<DashBoard> {
               )
             ],
           ),
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  child: Text("DrawerHEader"),
+                ),
+                ListTile(
+                  title: Text('Home'),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  title: Text('Messages'),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  title: Text('Contact Us'),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  title: Text('FeedBack'),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+              ],
+            ),
+          ),
 
           body: Container(
             child: _currentPage,
           ),
 
-          
           // Bottom Navigation Bar
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
