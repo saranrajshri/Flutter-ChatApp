@@ -27,10 +27,10 @@ class _LoginState extends State<Login> {
 
   // Firebase Login
   Future<String> signIn(String email, String password) async {
-    FirebaseUser user;
+     FirebaseUser user;
     try {
-      user = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      user = (await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password)).user;
       Navigator.pushNamed(context, '/dashboard');
     } catch (e) {
       _showSnackBar(e.message, "danger");

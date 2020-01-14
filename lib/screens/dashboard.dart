@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 import 'package:newapp/components/Dashboard/Home.dart';
@@ -13,6 +14,87 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   int _currentTabIndex = 0;
   Widget _currentPage = Home();
+  String postTitle;
+  String postBody;
+
+  Future<void> _addNewPost(String postTitle, String postBody) async {
+    var data = {
+      "postTitle": postTitle,
+      "postBody": postBody,
+      // "userID": "usnbd", 
+      // "userName": "Somewhat"
+    };
+    try {
+      Firestore.instance.collection("posts").add(data);
+    } catch (e) {
+      print(e.message);
+    }
+  }
+
+  void _showAddNewPostDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Add a new post"),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextField(
+                onChanged: (text) {
+                  setState(() {
+                    postTitle = text;
+                  });
+                },
+                decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    hintText: "Title"),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextField(
+                onChanged: (text) {
+                  setState(() {
+                    postBody = text;
+                  });
+                },
+                maxLines: null,
+                decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    hintText: "Description"),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50.0,
+                decoration: BoxDecoration(color: Colors.transparent),
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                  color: Colors.blueAccent,
+                  elevation: 5.0,
+                  child: Text(
+                    "Post",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    _addNewPost(postTitle, postBody);
+                    Navigator.pop(context);
+                  },
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,7 +167,9 @@ class _DashBoardState extends State<DashBoard> {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             backgroundColor: Colors.orangeAccent,
-            onPressed: () {},
+            onPressed: () {
+              _showAddNewPostDialog();
+            },
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
