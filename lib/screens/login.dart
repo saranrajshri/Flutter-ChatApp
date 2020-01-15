@@ -14,7 +14,6 @@ class _LoginState extends State<Login> {
   String password;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
   // Snackbar alert
   _showSnackBar(String message, String variant) {
     final snackBar = SnackBar(
@@ -25,12 +24,27 @@ class _LoginState extends State<Login> {
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
+  void _showLoadingAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Signing In..."),
+            content: Container(
+              child: Text("Loading...Please Wait"),
+            ),
+          );
+        });
+  }
+
   // Firebase Login
   Future<String> signIn(String email, String password) async {
-     FirebaseUser user;
+    _showLoadingAlert();
+    FirebaseUser user;
     try {
       user = (await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)).user;
+              .signInWithEmailAndPassword(email: email, password: password))
+          .user;
       Navigator.pushNamed(context, '/dashboard');
     } catch (e) {
       _showSnackBar(e.message, "danger");

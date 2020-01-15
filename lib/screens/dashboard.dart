@@ -16,19 +16,30 @@ class _DashBoardState extends State<DashBoard> {
   Widget _currentPage = Home();
   String postTitle;
   String postBody;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Future<void> _addNewPost(String postTitle, String postBody) async {
     var data = {
       "postTitle": postTitle,
       "postBody": postBody,
-      // "userID": "usnbd", 
+      // "userID": "usnbd",
       // "userName": "Somewhat"
     };
     try {
       Firestore.instance.collection("posts").add(data);
+      _showSnackBar("Posted Successfully", "success");
     } catch (e) {
       print(e.message);
     }
+  }
+
+  void _showSnackBar(String message, String variant) {
+    final snackBar = SnackBar(
+      content: Text("$message"),
+      backgroundColor: variant == "danger" ? Colors.red : Colors.green,
+      duration: Duration(seconds: 2),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   void _showAddNewPostDialog() {
@@ -100,6 +111,7 @@ class _DashBoardState extends State<DashBoard> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          key: _scaffoldKey,
           appBar: AppBar(
             title: Text(
               "Instagram Clone",

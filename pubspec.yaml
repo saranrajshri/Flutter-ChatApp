@@ -53,6 +53,7 @@ flutter:
   assets:
    - assets/logos/facebook.png
    - assets/logos/google.png
+   - assets/icons/ic-launcher.png
 
   #  - images/a_dot_ham.jpeg
 
