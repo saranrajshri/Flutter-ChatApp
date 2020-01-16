@@ -54,61 +54,63 @@ class _DashBoardState extends State<DashBoard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Add a new post"),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TextField(
-                onChanged: (text) {
-                  setState(() {
-                    postTitle = text;
-                  });
-                },
-                decoration: InputDecoration(
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    hintText: "Title"),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                onChanged: (text) {
-                  setState(() {
-                    postBody = text;
-                  });
-                },
-                maxLines: null,
-                decoration: InputDecoration(
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    hintText: "Description"),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                width: double.infinity,
-                height: 50.0,
-                decoration: BoxDecoration(color: Colors.transparent),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
-                  color: Colors.blueAccent,
-                  elevation: 5.0,
-                  child: Text(
-                    "Post",
-                    style: TextStyle(color: Colors.white),
+            title: Text("Add a new post"),
+            content: Container(
+              height: 220.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextField(
+                    onChanged: (text) {
+                      setState(() {
+                        postTitle = text;
+                      });
+                    },
+                    decoration: InputDecoration(
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                        hintText: "Title"),
                   ),
-                  onPressed: () {
-                    _addNewPost(postTitle, postBody, state);
-                    Navigator.pop(context);
-                  },
-                ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  TextField(
+                    onChanged: (text) {
+                      setState(() {
+                        postBody = text;
+                      });
+                    },
+                    maxLines: null,
+                    decoration: InputDecoration(
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                        hintText: "Description"),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 50.0,
+                    decoration: BoxDecoration(color: Colors.transparent),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0)),
+                      color: Colors.blueAccent,
+                      elevation: 5.0,
+                      child: Text(
+                        "Post",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        _addNewPost(postTitle, postBody, state);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
+            ));
       },
     );
   }

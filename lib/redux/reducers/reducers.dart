@@ -13,7 +13,6 @@ AppState reducer(AppState prevState, dynamic action) {
 
   if (action is UserData) {
     newState.userData = action.payload;
-    print(newState.userData);
   }
 
   return newState;
