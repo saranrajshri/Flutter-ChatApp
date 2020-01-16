@@ -9,6 +9,8 @@ import 'package:newapp/components/Dashboard/Search.dart';
 import 'package:newapp/components/Dashboard/Settings.dart';
 import 'package:newapp/redux/appModel.dart';
 import 'package:newapp/redux/reducers/reducers.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:io';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -23,6 +25,25 @@ class _DashBoardState extends State<DashBoard> {
   String postTitle;
   String postBody;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  void _getFirebaseToken() {
+    _firebaseMessaging.getToken().then((token) {
+      print(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
 
   Future<void> _addNewPost(
       String postTitle, String postBody, AppState state) async {
@@ -126,6 +147,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   void initState() {
     super.initState();
+    _getFirebaseToken();
     _getUser().then((user) {
       if (user != null) {
         getUserData(user.uid);

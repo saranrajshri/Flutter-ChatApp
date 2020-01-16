@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newapp/screens/messageScreen.dart';
 
 class Messages extends StatefulWidget {
   @override
@@ -45,10 +46,18 @@ class _MessagesState extends State<Messages> {
                     "My Messages",
                     style: TextStyle(fontSize: 20.0, color: Colors.black54),
                   ),
-                  Icon(
-                    Icons.add,
-                    color: Colors.black54,
-                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black54,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessageScreen()));
+                    },
+                  )
                 ],
               )),
           _buildMessagesRow("How are you ?", "Saranraj"),

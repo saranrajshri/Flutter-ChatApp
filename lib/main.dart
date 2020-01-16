@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newapp/screens/login.dart';
+import 'package:newapp/screens/messageScreen.dart';
 import 'package:newapp/screens/register.dart';
 import 'package:newapp/screens/dashboard.dart';
 import 'package:newapp/screens/splashScreen.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => Login(),
           '/register': (context) => Register(),
           '/dashboard': (context) => DashBoard(),
+          '/message': (context) => MessageScreen(),
         },
       ),
       store: store,
