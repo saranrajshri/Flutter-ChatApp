@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,7 +16,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/login');
+    _getUser().then((user) {
+      if (user != null) {
+        Navigator.of(context).pushReplacementNamed('/dashboard');
+      } else {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
+    });
+  }
+
+  Future<FirebaseUser> _getUser() async {
+    return await FirebaseAuth.instance.currentUser();
   }
 
   @override

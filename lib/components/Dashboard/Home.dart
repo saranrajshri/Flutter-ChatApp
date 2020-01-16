@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:newapp/redux/appModel.dart';
+import 'package:newapp/redux/reducers/reducers.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,17 +12,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Widget _buildCard(BuildContext context, DocumentSnapshot data) {
+  Widget _buildCard(BuildContext context, DocumentSnapshot data,) {
     var userName = data['userName'];
     var userID = data['userID'];
     var postTile = data['postTitle'];
     var postBody = data['postBody'];
-
     return Card(
         child: Column(
       children: <Widget>[
         ListTile(
-          title: Text(postTile),
+          title: Text("$postTile"),
           leading: Icon(
             Icons.supervised_user_circle,
             size: 40.0,
@@ -38,20 +40,26 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: StreamBuilder(
-            stream: Firestore.instance.collection("posts").snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text("Loading");
-              }
-              return ListView.builder(
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (context, index) {
-                  print(snapshot.data);
-                  return _buildCard(context, snapshot.data.documents[index]);
-                },
-              );
-            }));
+    return StoreConnector<AppState, AppState>(
+        converter: (store) => store.state,
+        builder: (context, state) {
+          return Container(
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection("posts").snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text("Loading");
+                    }
+                    return ListView.builder(
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        print(snapshot.data);
+                        return _buildCard(
+                            context, snapshot.data.documents[index]);
+                      },
+                    );
+                  })
+                  );
+        });
   }
 }

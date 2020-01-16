@@ -14,6 +14,20 @@ class _LoginState extends State<Login> {
   String password;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  @override
+  void initState() {
+    super.initState();
+    _getUser().then((user) {
+      if (user != null) {
+        Navigator.of(context).pushReplacementNamed('/dashboard');
+      }
+    });
+  }
+
+  Future<FirebaseUser> _getUser() async {
+    return await FirebaseAuth.instance.currentUser();
+  }
+
   // Snackbar alert
   _showSnackBar(String message, String variant) {
     final snackBar = SnackBar(
@@ -39,9 +53,9 @@ class _LoginState extends State<Login> {
 
   // Firebase Login
   Future<String> signIn(String email, String password) async {
-    _showLoadingAlert();
     FirebaseUser user;
     try {
+      _showLoadingAlert();  
       user = (await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password))
           .user;
