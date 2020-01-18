@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
+import 'package:newapp/screens/register.dart';
+
 class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -55,7 +57,7 @@ class _LoginState extends State<Login> {
   Future<String> signIn(String email, String password) async {
     FirebaseUser user;
     try {
-      _showLoadingAlert();  
+      _showLoadingAlert();
       user = (await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password))
           .user;
@@ -205,7 +207,8 @@ class _LoginState extends State<Login> {
         alignment: Alignment.center,
         child: FlatButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/register');
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Register()));
           },
           child: Text(
             "Don't have an account ? SignUp",

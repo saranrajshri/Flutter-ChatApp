@@ -52,6 +52,8 @@ class _DashBoardState extends State<DashBoard> {
       "postBody": postBody,
       "userID": state.userID,
       "userName": state.userData["userName"],
+      "comments": [{}],
+      "likes": [{}]
     };
     try {
       Firestore.instance.collection("posts").add(data);

@@ -4,6 +4,9 @@ class AppState {
   double sliderFontSize;
   String userID;
   String userName;
+  String currentMessageTo;
+  String currentMessageToUserName;
+
   Map<dynamic, dynamic> userData;
   AppState({
     @required this.sliderFontSize,
@@ -12,6 +15,7 @@ class AppState {
   AppState.fromAppState(AppState another) {
     userID = another.userID;
     userName = another.userName;
+    currentMessageTo = another.currentMessageTo;
   }
 
   String get getUserID => userID;
@@ -32,4 +36,14 @@ class UserName {
 class UserData {
   final Map<dynamic, dynamic> payload;
   UserData(this.payload);
+}
+
+class CurrentMessageTo {
+  final String payload;
+  CurrentMessageTo(this.payload);
+}
+
+class CurrentMessageToUserName {
+  final String payload;
+  CurrentMessageToUserName(this.payload);
 }

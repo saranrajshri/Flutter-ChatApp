@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newapp/screens/login.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -9,10 +10,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-
   void _logOut() {
     FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacementNamed('/login');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newapp/screens/messageScreen.dart';
+import 'package:newapp/screens/showAllUsers.dart';
 
 class Messages extends StatefulWidget {
   @override
@@ -55,7 +56,7 @@ class _MessagesState extends State<Messages> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MessageScreen()));
+                              builder: (context) => ShowAllUsers()));
                     },
                   )
                 ],

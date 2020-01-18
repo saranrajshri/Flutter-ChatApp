@@ -18,7 +18,7 @@ class _MessageScreenState extends State<MessageScreen> {
   ScrollController _controller = ScrollController();
 
   // Appbar
-  Widget _buildAppBar() {
+  Widget _buildAppBar(AppState state) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 2.0,
@@ -37,7 +37,7 @@ class _MessageScreenState extends State<MessageScreen> {
         )
       ],
       title: Text(
-        "SuperMan",
+        state.currentMessageToUserName,
         style: TextStyle(fontFamily: "OpenSans", color: Colors.black),
       ),
     );
@@ -57,9 +57,21 @@ class _MessageScreenState extends State<MessageScreen> {
           .collection("messages")
           .document(currentDocID)
           .updateData({"messages": newListOfMessages});
-      Timer(Duration(milliseconds: 100), () => _controller.jumpTo(_controller.position.maxScrollExtent));    } catch (e) {
+      _scrollToBottom();
+    } catch (e) {
       print(e.message);
     }
+  }
+
+  void _scrollToBottom() {
+    Timer(Duration(milliseconds: 100),
+        () => _controller.jumpTo(_controller.position.maxScrollExtent));
+  }
+
+  @override
+  void initState() {
+    _scrollToBottom();
+    super.initState();
   }
 
   // Message Input Field
@@ -140,19 +152,19 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: _buildAppBar(),
-          body: StoreConnector<AppState, AppState>(
-              converter: (store) => store.state,
-              builder: (context, state) {
-                return Column(
+        home: StoreConnector<AppState, AppState>(
+          converter: (store) => store.state,
+          builder: (context, state) {
+            return Scaffold(
+                appBar: _buildAppBar(state),
+                body: Column(
                   children: <Widget>[
                     Expanded(
                         child: StreamBuilder(
                       stream: Firestore.instance
                           .collection("messages")
                           .where("userFrom", isEqualTo: state.userID)
-                          .where("userTo", isEqualTo: "")
+                          .where("userTo", isEqualTo: state.currentMessageTo)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -161,7 +173,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
                         return ListView.builder(
                           controller: _controller,
-                          itemCount: 1,
+                          itemCount: snapshot.data.documents.length,
                           // reverse: true,
                           itemBuilder: (context, index) {
                             return _buildMessageRow(
@@ -172,8 +184,8 @@ class _MessageScreenState extends State<MessageScreen> {
                     )),
                     _buildMessageInputRow(state),
                   ],
-                );
-              }),
+                ));
+          },
         ));
   }
 }

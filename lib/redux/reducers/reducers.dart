@@ -15,5 +15,12 @@ AppState reducer(AppState prevState, dynamic action) {
     newState.userData = action.payload;
   }
 
+  if (action is CurrentMessageTo) {
+    newState.currentMessageTo = action.payload;
+  }
+
+  if (action is CurrentMessageToUserName) {
+    newState.currentMessageToUserName = action.payload;
+  }
   return newState;
 }

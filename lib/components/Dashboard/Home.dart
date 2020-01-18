@@ -73,7 +73,6 @@ class _HomeState extends State<Home> {
             .collection('posts')
             .document(documentID)
             .updateData({"comments": newListOfComments});
-        Navigator.pop(context);
       } catch (e) {
         print(e.message);
       }
